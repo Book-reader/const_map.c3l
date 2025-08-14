@@ -21,10 +21,9 @@ const FOO = const_map::@new{int, String}(
 
 fn void main()
 {
-	// CONST_MAP.data[0].hash = 0;
-	CONST_MAP.@each(; entry)
+	CONST_MAP.@each(; $entry)
 	{
-		io::printfn("%s:%s:%s", entry.hash, entry.key, entry.val);
+		io::printfn("%s:%s:%s", $entry.hash, $entry.key, $entry.val);
 	};
-	io::printfn("%s %s %s", CONST_MAP.has_key("foo"), CONST_MAP["foo"]!!, CONST_MAP.has_key("baz"));
+	io::printfn("%s %s %s", CONST_MAP.@has_key("foo"), CONST_MAP["foo"]!!, CONST_MAP.@has_key("baz"));
 }

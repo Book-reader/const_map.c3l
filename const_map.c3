@@ -52,19 +52,47 @@ fn Value? ConstMap.get(&self, Key key) @operator([])
 	return NOT_FOUND?;
 }
 
+macro bool ConstMap.@has_key($self, Key $key)
+{
+	$self.@each(; $entry)
+	{
+		$if $entry.hash == $key.@const_hash():
+			return true;
+		$endif
+	};
+	return false;
+}
+
+macro Value ConstMap.@get($self, Key $key)
+{
+	bool $found;
+	$self.@each(; $entry)
+	{
+		$if $entry.hash == $key.@const_hash():
+			$found = true;
+			return $entry.key;
+		$endif
+	};
+	$if !$found:
+		$error @sprintf("Key '%s' does not exist in the map", $key);
+	$endif
+}
+
 macro usz ConstMap.len(#self) @const @safemacro @operator(len) => SIZE;
 
-macro ConstMap.@each(&self; @body(entry))
+macro ConstMap.@each($self; @body($entry))
 {
-	foreach (entry : self.data) @body(entry);
+	$for var $i = 0; $i < $self.len(); $i ++:
+		@body($self.data[$i]);
+	$endfor
 }
 
-macro ConstMap.@each_key(&self; @body(key))
+macro ConstMap.@each_key($self; @body($key)) => $self.@each(; $entry)
 {
-	foreach (&entry : self.data) @body(entry.key);
+	$body($entry.key);
 }
 
-macro ConstMap.@each_value(&self; @body(value))
+macro ConstMap.@each_value(&self; @body($value)) => $self.@each(; $entry)
 {
-	foreach (&entry : self.data) @body(entry.value);
+	$body($entry.value);
 }
