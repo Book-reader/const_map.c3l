@@ -23,7 +23,8 @@ fn void main()
 {
 	CONST_MAP.@each(; $entry)
 	{
-		io::printfn("%s:%s:%s", $entry.hash, $entry.key, $entry.val);
+		$echo @sprintf("%s:%s:%s", $entry.hash, $entry.key, $entry.val);
 	};
-	io::printfn("%s %s %s", CONST_MAP.@has_key("foo"), CONST_MAP["foo"]!!, CONST_MAP.@has_key("baz"));
+	String s = "foo";
+	io::printfn("%s %s %s", CONST_MAP.has_key(s), CONST_MAP["foo"]!!, CONST_MAP.@has_key("baz"));
 }
