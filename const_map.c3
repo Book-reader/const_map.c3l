@@ -52,27 +52,25 @@ fn Value? ConstMap.get(&self, Key key) @operator([])
 	return NOT_FOUND?;
 }
 
-macro bool ConstMap.@has_key($self, Key $key)
+macro bool ConstMap.@has_key($self, Key $key) @const
 {
-	$self.@each(; $entry)
-	{
-		$if $entry.hash == $key.@const_hash():
+	$for var $i = 0; $i < $self.len(); $i ++:
+		$if $self.data[$i].hash == $key.@const_hash():
 			return true;
 		$endif
-	};
+	$endfor
 	return false;
 }
 
-macro Value ConstMap.@get($self, Key $key)
+macro Value ConstMap.@get($self, Key $key) @const
 {
 	bool $found;
-	$self.@each(; $entry)
-	{
-		$if $entry.hash == $key.@const_hash():
+	$for var $i = 0; $i < $self.len(); $i ++:
+		$if $self.data[$i].hash == $key.@const_hash():
 			$found = true;
-			return $entry.key;
+			return $self.data[$i].val;
 		$endif
-	};
+	$endfor
 	$if !$found:
 		$error @sprintf("Key '%s' does not exist in the map", $key);
 	$endif
