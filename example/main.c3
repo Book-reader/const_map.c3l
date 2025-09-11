@@ -4,7 +4,7 @@ import std::io;
 import std::hash::fnv32a;
 
 macro uint String.@const_hash($self) @const => @str_hash($self);
-macro uint String.rt_hash(self) => (uint)fnv32a::hash(self);
+macro uint String.rt_hash(self) => self.hash();
 
 const CONST_MAP = const_map::@new_hashed{String, String}(
 	{"foo", "bar"},

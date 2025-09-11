@@ -4,7 +4,7 @@ import const_map::internal @public;
 struct Temp @private {Key key; Value val;}
 
 <*
- @require $defined((Key){}.@const_hash) &&& $defined((Key){}.rt_hash) : "The key must support both compile-time and runtime hashing, and both must use the same algorithm (looking at you String)"
+ @require $defined((Key){}.@const_hash) &&& $defined((Key){}.rt_hash) : "The key must support both compile-time and runtime hashing, and both must use the same algorithm"
 *>
 macro @new_hashed(...) @const
 {
