@@ -14,6 +14,7 @@ const CONST_MAP = const_map::@new_hashed{String, String}(
 
 struct Foo {int a; int b;}
 fn bool Foo.eq(&self, Foo other) @operator(==) => self.a == other.a && self.b == other.b;
+
 const CONST_MAP_2 = const_map::@new_equal{Foo, String}(
 	{{1, 2}, "bar"},
 	{{3, 4}, "baz"},
